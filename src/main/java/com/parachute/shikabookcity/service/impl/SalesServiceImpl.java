@@ -166,7 +166,7 @@ public class SalesServiceImpl extends ServiceImpl<SalesDao, Sales> implements Sa
         List<HashMap<String,Object>> list = new ArrayList<>();
         //将数据打包给前端
         daily.forEach(sales -> {
-            HashMap<String, Object> map = new HashMap<>(16);
+            HashMap<String, Object> map = new HashMap<>(1);
             map.put("value",sales.getSales());
             map.put("name",sales.getName());
             list.add(map);
