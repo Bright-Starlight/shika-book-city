@@ -9,10 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <packaging>war</packaging>
-    <groupId>com.parachute</groupId>
     <artifactId>shika-book-city-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shika_book_city_manager</name>
+    <name>shika-book-city-manager</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
