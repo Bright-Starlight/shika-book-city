@@ -22,9 +22,9 @@
 
    进入希卡书城管理系统网页版后，可看到主界面如下图所示：
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image002.gif)
+[![vFfuex.png](https://s1.ax1x.com/2022/07/31/vFfuex.png)](https://imgtu.com/i/vFfuex)
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image004.gif)
+[![vFfZl9.png](https://s1.ax1x.com/2022/07/31/vFfZl9.png)](https://imgtu.com/i/vFfZl9)
 
 希卡书城管理系统实现时主要包括如下几个页面：【登录】页面、【注册】页面、【书籍管理】页面、【活动设置】页面、【订单管理】页面、【销量统计】页面、【客户评论】页面、【个人中心】页面。
 
@@ -32,19 +32,19 @@
 
 主要用于店家登录店铺后台
 
-   ![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image006.gif)
+[![vFfmO1.png](https://s1.ax1x.com/2022/07/31/vFfmO1.png)](https://imgtu.com/i/vFfmO1)
 
 #### 注册
 
 用于店家注册账号
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image008.gif)
+[![vFfeyR.png](https://s1.ax1x.com/2022/07/31/vFfeyR.png)](https://imgtu.com/i/vFfeyR)
 
 #### 书籍管理
 
 按照上架与不上架分类，商家可以自由设置书籍的上架和下架，以及添加书籍，修改书籍和删除书籍。右上角附带搜索功能，可以根据书名搜索。
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image010.gif)
+[![vFfVSJ.png](https://s1.ax1x.com/2022/07/31/vFfVSJ.png)](https://imgtu.com/i/vFfVSJ)
 
   
 
@@ -52,8 +52,7 @@
 
 活动设置主要用于商家可以发布促销活动来获取更多的营销额。上架可以设置活动使时间，商家手动发布后，系统自动会进行激活和结束。商家可以自由添加活动和修改活动，也可以强行中止活动。
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image012.gif)
-
+[![vFfAW4.png](https://s1.ax1x.com/2022/07/31/vFfAW4.png)](https://imgtu.com/i/vFfAW4)
 
 
 ####  订单管理
@@ -62,13 +61,13 @@
 
  
 
-# ![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image014.gif)
+[![vFf9e0.png](https://s1.ax1x.com/2022/07/31/vFf9e0.png)](https://imgtu.com/i/vFf9e0)
 
 #### 销量统计
 
 销量统计用于统计商家日，月，年的销售情况：
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image016.gif)
+[![vFfFFU.png](https://s1.ax1x.com/2022/07/31/vFfFFU.png)](https://imgtu.com/i/vFfFFU)
 
  
 
@@ -76,9 +75,8 @@
 
 客户评论可以查看用户对产品的评价：
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image018.gif)
-
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image020.gif)
+[![vFfkYF.png](https://s1.ax1x.com/2022/07/31/vFfkYF.png)](https://imgtu.com/i/vFfkYF)
+[![vFfCwV.png](https://s1.ax1x.com/2022/07/31/vFfCwV.png)](https://imgtu.com/i/vFfCwV)
 
  
 
@@ -86,7 +84,7 @@
 
 个人中心，用户可以对自己的资料进行修改：
 
-![img](file:///C:/Users/machi/AppData/Local/Temp/msohtmlclip1/01/clip_image022.gif)
+[![vFfPoT.png](https://s1.ax1x.com/2022/07/31/vFfPoT.png)](https://imgtu.com/i/vFfPoT)
 
  
 
@@ -130,7 +128,7 @@ SpringBoot + Vue3.0 + element-ui-plus + Mybatisplus +Echarts + 前后分离
 
 - 后端
 
-  1. 创建数据库 shika_book_city
+  1. 创建数据库 shika_book_city 在文件加docs/mysql导入数据库数据
   2. 配置redis和数据库
   3. 运行ShikaBookCityApplication启动后端项目
 
