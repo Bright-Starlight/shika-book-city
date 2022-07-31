@@ -131,10 +131,10 @@ SpringBoot + Vue3.0 + element-ui-plus + Mybatisplus +Echarts + 前后分离
   1. 创建数据库 shika_book_city 在文件加docs/mysql导入数据库数据
   2. 配置redis和数据库
   3. 运行ShikaBookCityApplication启动后端项目
-
+  4.注册路过图床https://imgtu.com/login 用于文件上传功能
+  5.进入src/main/java/com/parachute/shikabookcity/util/ImgtuUtils.java修改用户名和密码即可
 - 前端
 
   1. 进入shika-book-city-ui文件夹 打开cmd 
   2. 执行 yarn install
-
-     3.执行 yarn serve 启动前端项目
+  3.执行 yarn serve 启动前端项目
