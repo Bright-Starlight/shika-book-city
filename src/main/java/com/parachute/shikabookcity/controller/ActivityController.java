@@ -146,9 +146,7 @@ public class ActivityController  {
             log.error(e.getMessage(),e);
             return Result.of(false,ResultConstant.SERVER_EXCEPTION);
         }
-
     }
-
 
     /**
      *

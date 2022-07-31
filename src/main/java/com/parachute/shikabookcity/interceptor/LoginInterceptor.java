@@ -42,8 +42,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         //检查拦截的URL有没有携带token
         //获取请求名 也就是/login
         String servletPath = request.getServletPath();
+        String method = request.getMethod();
         //不拦截主页及登陆注册请求
-        if (LoginConstant.LOGIN.equals(servletPath) || LoginConstant.INDEX.equals(servletPath) || LoginConstant.REGISTER.equals(servletPath)){
+        if (LoginConstant.LOGIN.equals(servletPath) || LoginConstant.INDEX.equals(servletPath) || LoginConstant.REGISTER.equals(servletPath) || LoginConstant.CORS.equals(method) ){
             return true;
         }
         String userName = request.getHeader("userName");

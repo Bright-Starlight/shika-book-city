@@ -22,7 +22,7 @@ import router from '@/router';
 // 创建axios实例
 const request = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL: 'http://127.0.0.1:80/',
+  baseURL: 'http://127.0.0.1:8088/',
   // 超时
   timeout: 10000,
   // 设置Content-Type，规定了前后端的交互使用json

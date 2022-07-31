@@ -12,7 +12,6 @@
             "
             fit="fill"
             :src="require('@/assets/image/logo.png')"
-            
           ></el-image>
           <el-menu
             active-text-color="#ffd04b"

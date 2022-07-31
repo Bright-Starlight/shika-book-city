@@ -25,9 +25,7 @@ const user = {
         LOGIN({commit},user) {
             return new Promise(function (resolve) {
                 login(user).then(res => {
-                    
                     if(res.data.flag === true){
-                        
                         commit("SAVE_TOKEN",res.data.data.token )
                         commit("SAVE_USERNAME",res.data.data.userName)
                         commit("SAVE_NICKNAME",res.data.data.nickName)

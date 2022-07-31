@@ -12,6 +12,7 @@ import com.parachute.shikabookcity.util.Page;
 import com.parachute.shikabookcity.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("book")
 @Slf4j
+@CrossOrigin
 public class BookController{
     /**
      * 书籍
@@ -61,9 +63,7 @@ public class BookController{
             log.error(e.getMessage(),e);
             return Result.of(false, ResultConstant.SERVER_EXCEPTION);
         }
-
     }
-
 
     /**
      * ▽

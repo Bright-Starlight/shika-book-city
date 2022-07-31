@@ -4,11 +4,11 @@ module.exports = defineConfig({
   lintOnSave:false,
   
 })
-//请求代理到后端服务器
+// 请求代理到后端服务器
 module.exports = {
   devServer: {
     port: 80,
-    proxy: 'http://localhost:8088/'
+    // proxy: 'http://localhost:8088/'
   }}
-  
+
   

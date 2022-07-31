@@ -12,4 +12,5 @@ public class LoginConstant {
     public static final String LOGIN = "/user/login";
     public static final String INDEX = "/";
     public static final String REGISTER = "/user/register";
+    public static final String CORS = "OPTIONS";
 }
