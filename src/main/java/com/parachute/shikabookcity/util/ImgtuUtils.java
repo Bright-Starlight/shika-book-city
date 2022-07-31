@@ -20,6 +20,10 @@ import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,11 +35,13 @@ import java.util.regex.Pattern;
  * @author NXY666
  */
 @Slf4j
+@Component
 public class ImgtuUtils {
+    //用户名
+    static String IMGTU_USER_NAME = "2417600913@qq.com";
+    //密码
+    static String IMGTU_PASSWORD = "mc2417600913";
 
-    static final String IMGTU_USER_NAME = "2417600913@qq.com";
-
-    static final String IMGTU_PASSWORD = "mc2417600913";
 
 
 
@@ -137,6 +143,7 @@ public class ImgtuUtils {
 
     public static Boolean login(boolean forceAction) throws IOException {
         if (!forceAction && !isLoginExpired()) {
+
             log.info("【登录】成功：登录状态有效期内，无需重新登录。");
             return null;
         }
@@ -154,6 +161,7 @@ public class ImgtuUtils {
             headers.put("cookie", "PHPSESSID=" + sessionId + ";");
             headers.put("content-type", "application/x-www-form-urlencoded");
             headers.put("connection", "keep-alive");
+
 
             CloseableHttpResponse httpResponse = HttpUtils.post(IMGTU_LOGIN_URL, new HashMap<>(0), headers, "login-subject=" + IMGTU_USER_NAME + "&password=" + IMGTU_PASSWORD + "&auth_token=" + authToken);
 

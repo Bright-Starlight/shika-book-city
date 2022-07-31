@@ -72,7 +72,7 @@
           >
             <el-upload
               class="avatar-uploader"
-              action="/user/upload"
+              action="http://127.0.0.1:8088/user/upload"
               :auto-upload="autoUpload"
               name="imgFile"
               :headers="headers"
