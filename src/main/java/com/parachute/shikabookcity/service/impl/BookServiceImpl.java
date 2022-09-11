@@ -180,7 +180,7 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
      * @return {@link Result}
      */
     @Override
-    public Result insert(Map<String,Object> data) {
+    public Result insert(Map<String, Object> data) {
         //前端数据转化为对象
         Object s = data.get("book");
         Book book = JSON.parseObject(JSON.toJSONString(s), new TypeReference<Book>() {
@@ -208,7 +208,7 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
         //注入书籍类型联系
         Integer bookId = book.getId();
         types.forEach(type -> bookDao.addBookType(bookId, type));
-        return Result.of(true,ResultConstant.UPDATE_SUCCEED);
+        return Result.of(true, ResultConstant.UPDATE_SUCCEED);
     }
 
     /**
@@ -220,8 +220,8 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
      */
     @Override
     public void delById(Integer userId, Integer bookId) {
-            bookDao.delById(bookId);
-            bookDao.delUserBook(userId, bookId);
+        bookDao.delById(bookId);
+        bookDao.delUserBook(userId, bookId);
     }
 
     /**
@@ -229,7 +229,6 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
      *
      * @param userId 用户id
      * @param bookId 书id
-     *
      */
     @Override
     public void addUserBook(Integer userId, Integer bookId) {
@@ -246,21 +245,21 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
      * @return {@link String}
      */
     @Override
-    public String insertCommodityCode(){
+    public String insertCommodityCode() {
         //随机生成商品编码
         String commodityCode = null;
-        boolean flag  =false;
-       while (Boolean.FALSE.equals(flag)){
-           commodityCode = RandomStringUtils.randomNumeric(8);
-           try {
-               bookDao.insertCommodityCode(commodityCode);
-               flag = true;
-           }catch (Exception e){
-               log.error(ResultConstant.COMMODITY_CODE_IS_DUPLICATION);
-               e.printStackTrace();
-           }
-       }
-       return commodityCode;
+        boolean flag = false;
+        while (Boolean.FALSE.equals(flag)) {
+            commodityCode = RandomStringUtils.randomNumeric(8);
+            try {
+                bookDao.insertCommodityCode(commodityCode);
+                flag = true;
+            } catch (Exception e) {
+                log.error(ResultConstant.COMMODITY_CODE_IS_DUPLICATION);
+                e.printStackTrace();
+            }
+        }
+        return commodityCode;
 
     }
 

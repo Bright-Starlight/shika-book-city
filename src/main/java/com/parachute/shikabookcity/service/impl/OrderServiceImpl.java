@@ -42,10 +42,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
                 String bookName =  getBookName(code.getCommodityCode());
                 String activityName =  getActivityName(code.getCommodityCode());
                 if (bookName != null){
-                    commodity.append(bookName).append("x").append(code.getQuantities()).append("; ");
+                    commodity.append(bookName).append("X").append(code.getQuantities()).append("; ");
                 }
                 if (activityName != null){
-                    commodity.append(activityName).append("x").append(code.getQuantities());
+                    commodity.append(activityName).append("X").append(code.getQuantities());
                 }
             });
             order.setCommodity(commodity);

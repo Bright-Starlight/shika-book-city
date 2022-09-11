@@ -25,9 +25,9 @@ public interface SalesDao extends BaseMapper<Sales> {
      * @param date 日期
      * @return {@link List}<{@link Sales}>
      */
-    @Select("SELECT b.`name`,s.sales " +
+    @Select("SELECT b.`name`,sum(s.sales) " +
             "FROM sales s,user u,book b,user_book ub " +
-            "WHERE u.id = ub.user_id and ub.book_id = b.id and b.id = s.book_id and u.id = #{id} and s.date = #{data}")
+            "WHERE u.id = ub.user_id and ub.book_id = b.id and b.id = s.book_id and u.id = #{id} and s.date = #{data} GROUP BY b.`name`")
     List<Sales> getDaily(@Param("id") Integer id,@Param("data") String date);
 
     /**
@@ -62,9 +62,10 @@ public interface SalesDao extends BaseMapper<Sales> {
      * @param date 日期
      * @return {@link List}<{@link CommodityMarketingAmount}>
      */
-    @Select("select ma.marketing_amount,ma.commodity_code,ma.`name` " +
+    @Select("select SUM(ma.marketing_amount),ma.commodity_code,ma.`name` " +
             "from user u,user_book ub,book b,commodity_marketing_amount ma " +
-            "WHERE u.id = ub.user_id and ub.book_id = b.id and b.commodity_code = ma.commodity_code and u.id = #{id} and ma.`data` like #{date}")
+            "WHERE u.id = ub.user_id and ub.book_id = b.id and b.commodity_code = ma.commodity_code and u.id = #{id} and ma.`data` like #{date} GROUP BY ma.`name`"
+            )
     List<CommodityMarketingAmount> getCommodityMarketingAmount(@Param("id") Integer id, @Param("date") String date);
 
 
