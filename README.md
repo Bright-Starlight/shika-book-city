@@ -90,7 +90,7 @@
 
 #### 软件架构
 
-SpringBoot + Vue3.0 + element-ui-plus + Mybatisplus +Echarts + 前后分离
+SpringBoot + Vue3.0 + element-ui-plus + Mybatis-plus +Echarts + 前后分离
 
 
 
@@ -122,9 +122,15 @@ SpringBoot + Vue3.0 + element-ui-plus + Mybatisplus +Echarts + 前后分离
 
 - #### axios
 
-- #### Echarts
+- **Echarts**
 
 #### 安装教程
+
+- 测试账号
+
+  用户名：shikalu
+
+  密码：241760
 
 - 后端
 
@@ -137,5 +143,5 @@ SpringBoot + Vue3.0 + element-ui-plus + Mybatisplus +Echarts + 前后分离
 
   1. 进入shika-book-city-ui文件夹 打开cmd 
   2. 执行 yarn install
-  3.执行 yarn serve 启动前端项目
-有疑问可联系qq：2417600913
+  3. 执行 yarn serve 启动前端项目
+    有疑问可联系qq：2417600913
