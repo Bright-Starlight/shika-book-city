@@ -249,17 +249,17 @@ public class ActivityController  {
     public Result updateConfig(@RequestBody Activity activity) {
         //校验表单
         Result result = activityService.validateForm(activity);
-        if (result != null){
-            return result;
-        }
-        try {
-            activityService.update(activity);
-            return Result.of(true,ResultConstant.UPDATE_SUCCEED);
-        }catch (Exception e){
-            log.error(e.getMessage(),e);
-            return Result.of(false,ResultConstant.SERVER_EXCEPTION);
-        }
+        if (result.isFlag()){
+            try {
+                activityService.update(activity);
+                return Result.of(true,ResultConstant.UPDATE_SUCCEED);
+            }catch (Exception e){
+                log.error(e.getMessage(),e);
+                return Result.of(false,ResultConstant.SERVER_EXCEPTION);
+            }
 
+        }
+      return result;
 
     }
 

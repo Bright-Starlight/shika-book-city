@@ -152,8 +152,8 @@ const Delete = (data) => {
   padding: 0 11px;
   transition: var(--el-transition-box-shadow);
   width: 500%;
-  box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color))
-    inset;
+  box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color))
+    inset !important;
   border: none;
 }
 .avatar-uploader .el-upload {

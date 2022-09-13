@@ -55,6 +55,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     public Result register(User user) {
         String userName = user.getUserName();
         String password = user.getPassword();
+        if (userName.isEmpty()){
+            return Result.of(false, ResultConstant.USERNAME_IS_EMPTY);
+        }
+        if (password.isEmpty()){
+            return Result.of(false, ResultConstant.PASSWORD_IS_EMPTY);
+        }
         String pass = DigestUtils.md5DigestAsHex(password.getBytes());
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUserName, userName);
@@ -166,7 +172,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
                 }
             }
         }
-        return null;
+        return Result.of(true,ResultConstant.UPDATE_SUCCEED);
     }
 
     /**

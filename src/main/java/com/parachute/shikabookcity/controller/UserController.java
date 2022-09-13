@@ -51,6 +51,12 @@ public class UserController {
         //获取用户名和密码
         String userName = user.getUserName();
         String password = user.getPassword();
+        if (userName.isEmpty()){
+            return Result.of(false, ResultConstant.USERNAME_IS_EMPTY);
+        }
+        if (password.isEmpty()){
+            return Result.of(false, ResultConstant.PASSWORD_IS_EMPTY);
+        }
         //调用shiro框架实现认证
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
@@ -110,16 +116,16 @@ public class UserController {
     @RequestMapping("submit")
     public Result submit(@RequestBody User user) {
         Result result = userService.validateForm(user);
-        if (result != null) {
-            return result;
+        if (result.isFlag()){
+            try {
+                userService.update(user);
+                return Result.of(true, ResultConstant.UPDATE_SUCCEED);
+            } catch (Exception e) {
+                log.error(e.getMessage(),e);
+                return Result.of(false, ResultConstant.SERVER_EXCEPTION);
+            }
         }
-        try {
-            userService.update(user);
-            return Result.of(true, ResultConstant.UPDATE_SUCCEED);
-        } catch (Exception e) {
-            log.error(e.getMessage(),e);
-            return Result.of(false, ResultConstant.SERVER_EXCEPTION);
-        }
+        return result;
 
     }
 

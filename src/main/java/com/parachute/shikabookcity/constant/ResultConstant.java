@@ -7,7 +7,8 @@ package com.parachute.shikabookcity.constant;
  * @date 2022/05/04
  */
 public class ResultConstant {
-    private ResultConstant(){}
+    public static final String USERNAME_IS_EMPTY = "用户名为空";
+    public static final String PASSWORD_IS_EMPTY = "密码为空";
     public static final String FORCE_STOP = "强制停止成功";
     public static final String SERVER_EXCEPTION = "服务器异常";
     public static final String DELETE_SUCCEED = "删除成功";
@@ -42,5 +43,7 @@ public class ResultConstant {
     public static final String TELEPHONE_NUMBER_IS_BOUND = "号码已被绑定";
     public static final String USERNAME_IS_REGISTERED = "该账号已经注册";
     public static final String REGISTER_SUCCEED = "注册成功";
+
+    private ResultConstant(){}
 
 }

@@ -120,7 +120,7 @@ export default {
   width: 750px;
 }
 /* .el-aside{
- 
+
 } */
 .el-main {
   position: relative;

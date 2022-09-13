@@ -293,7 +293,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityDao, Activity> impl
         if (activity.getBooks() == null) {
             return Result.of(false, ResultConstant.ACTIVITY_PRODUCTS_NOT_SELECTION);
         }
-        return null;
+        return Result.of(true,"");
 
     }
 
