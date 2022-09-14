@@ -27,17 +27,16 @@
 </template>
 
 <script  setup>
-import { computed, ref } from "vue";
+import { computed, ref ,onMounted} from "vue";
 import { getPage } from "@/api/user";
-import { onMounted } from "vue";
-var tableData = ref([]);
+const tableData = ref([]);
 onMounted(() => {
   getPage(page).then((res) => {
     tableData.value = res.data;
   });
 });
 
-var page = {
+const page = {
   offset: 0,
   limit: 2,
 };
@@ -49,7 +48,6 @@ let changPage = function(page){
     tableData.value = res.data;
   });
 }
-// const list = tableData.value;
 
 let search = ref("");
 let filterTableData = computed(() =>

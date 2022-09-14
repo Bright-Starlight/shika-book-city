@@ -51,6 +51,6 @@ public interface UserService extends IService<User> {
      * @param imgFile img文件
      * @return {@link String}
      */
-    String upload(MultipartFile imgFile);
+    Result upload(MultipartFile imgFile);
 }
 

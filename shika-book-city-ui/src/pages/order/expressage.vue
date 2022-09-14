@@ -32,9 +32,9 @@ import { computed, ref,onMounted } from "vue";
 import { getOrderExpressage} from "@/api/order";
 
 
-var tableData = ref([]); //列表数据
-var total = ref(0); //数据总条数
-var pageSize = ref(0); //页面最大展现条数
+const tableData = ref([]); //列表数据
+const total = ref(0); //数据总条数
+const pageSize = ref(0); //页面最大展现条数
 
 import storage from "@/util/storage";
 

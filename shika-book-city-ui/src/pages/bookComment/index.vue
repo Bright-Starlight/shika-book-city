@@ -2,7 +2,7 @@
   <el-table :data="filterTableData" style="width: 100%">
     <el-table-column label="封面">
       <template #default="scope">
-        <img :src="scope.row.cover" style="height: 50px" />
+        <img :src="scope.row.cover" style="height: 50px" alt="封面"/>
       </template>
     </el-table-column>
     <el-table-column label="商品名" prop="name" />
@@ -33,14 +33,13 @@
 </template>
 <script  setup>
 import { useRouter } from "vue-router";
-import { computed, ref } from "vue";
+import { computed, ref,onMounted } from "vue";
 import { getBook } from "@/api/bookComment";
-import { onMounted } from "vue";
 
 
-var tableData = ref([]); //列表数据
-var total = ref(0); //数据总条数
-var pageSize = ref(0); //页面最大展现条数
+const tableData = ref([]); //列表数据
+const total = ref(0); //数据总条数
+const pageSize = ref(0); //页面最大展现条数
 
 import storage from "@/util/storage";
 

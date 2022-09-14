@@ -53,16 +53,16 @@ public class BookController{
     public Result submit(@RequestBody Book book) throws ParseException {
         //校验表单
         Result result = bookService.validateForm(book);
-        if (result != null){
-            return result;
+        if (result.isFlag()){
+            try {
+                bookService.update(book);
+                return Result.of(true,ResultConstant.UPDATE_SUCCEED);
+            }catch (Exception e){
+                log.error(e.getMessage(),e);
+                return Result.of(false, ResultConstant.SERVER_EXCEPTION);
+            }
         }
-        try {
-            bookService.update(book);
-            return Result.of(true,ResultConstant.UPDATE_SUCCEED);
-        }catch (Exception e){
-            log.error(e.getMessage(),e);
-            return Result.of(false, ResultConstant.SERVER_EXCEPTION);
-        }
+        return result;
     }
 
     /**

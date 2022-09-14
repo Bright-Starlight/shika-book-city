@@ -239,25 +239,26 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityDao, Activity> impl
         String s = (String) data.get("id");
         int id = Integer.parseInt(s);
         Result result = validateForm(activity);
-        if (result != null) {
-            return result;
+        if (result.isFlag()){
+            //随机生成商品编码
+            String commodityCode = insertCommodityCode();
+            activity.setCommodityCode(commodityCode);
+            //注入基本信息
+            List<String> publishTime = activity.getPublishTime();
+            Date startTime = DateUtils.string2Date(publishTime.get(0), DateUtils.DATE_TIME);
+            Date activityDeadline = DateUtils.string2Date(publishTime.get(1), DateUtils.DATE_TIME);
+            activity.setStartTime(startTime);
+            activity.setActivityDeadline(activityDeadline);
+            activity.setCreateTime(new Date());
+            activity.setUpdateTime(new Date());
+            activity.setUpdateName(SysConstant.SYSTEM_UPDATE);
+            save(activity);
+            //建立用户与活动的联系
+            activityDao.addUserActivity(id, activity.getId());
+            return Result.of(true, ResultConstant.INSERT_EXIST);
         }
-        //随机生成商品编码
-        String commodityCode = insertCommodityCode();
-        activity.setCommodityCode(commodityCode);
-        //注入基本信息
-        List<String> publishTime = activity.getPublishTime();
-        Date startTime = DateUtils.string2Date(publishTime.get(0), DateUtils.DATE_TIME);
-        Date activityDeadline = DateUtils.string2Date(publishTime.get(1), DateUtils.DATE_TIME);
-        activity.setStartTime(startTime);
-        activity.setActivityDeadline(activityDeadline);
-        activity.setCreateTime(new Date());
-        activity.setUpdateTime(new Date());
-        activity.setUpdateName(SysConstant.SYSTEM_UPDATE);
-        save(activity);
-        //建立用户与活动的联系
-        activityDao.addUserActivity(id, activity.getId());
-        return Result.of(true, ResultConstant.INSERT_EXIST);
+        return result;
+
     }
 
     /**

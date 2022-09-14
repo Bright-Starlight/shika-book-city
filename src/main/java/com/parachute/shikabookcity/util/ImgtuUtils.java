@@ -10,6 +10,7 @@ package com.parachute.shikabookcity.util;/*
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.parachute.shikabookcity.constant.ResultConstant;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
@@ -20,10 +21,8 @@ import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.InitBinder;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,11 +44,11 @@ public class ImgtuUtils {
 
 
 
-    static final private String IMGTU_INIT_URL = "https://imgtu.com/init";
+    static final private String IMGTU_INIT_URL = "https://imgse.com/init";
 
-    static final private String IMGTU_LOGIN_URL = "https://imgtu.com/login";
+    static final private String IMGTU_LOGIN_URL = "https://imgse.com/login";
 
-    static final private String IMGTU_OPERATE_URL = "https://imgtu.com/json";
+    static final private String IMGTU_OPERATE_URL = "https://imgse.com/json";
 
     static final private Pattern SESSION_ID_PATTERN = Pattern.compile("PHPSESSID=([^;]*); path=/; HttpOnly");
 
@@ -170,8 +169,10 @@ public class ImgtuUtils {
                 if ("Set-Cookie".equalsIgnoreCase(header.getName())) {
                     String cookies = header.getValue();
                     Matcher matcher = KEEP_LOGIN_PATTERN.matcher(cookies);
+                    System.out.println(matcher.toString());
                     if (matcher.find(0)) {
                         keepLogin = matcher.group(1);
+                        System.out.println(keepLogin.toString());
                     }
                 }
             }
@@ -197,7 +198,7 @@ public class ImgtuUtils {
         }
     }
 
-    public static String upload(byte[] bytes, String fileName, ContentType fileType) throws Exception {
+    public static Result upload(byte[] bytes, String fileName, ContentType fileType) throws Exception {
         log.info("-------->>>> 图床·上传 <<<<--------");
         if (!ensureLogin()) {
             log.error("【上传】失败：服务不可用。");
@@ -223,8 +224,11 @@ public class ImgtuUtils {
             log.info("【上传】成功：上传成功！");
             JsonObject jsonObject = new Gson().fromJson(httpRawString, JsonObject.class);
             JsonObject image = jsonObject.getAsJsonObject("image");
+            if (image == null){
+                return Result.of(false,"图片已经被其他用户使用");
+            }
             JsonElement url = image.get("url");
-            return url.getAsString();
+            return Result.of(true, ResultConstant.UPLOAD_SUCCEED, url.getAsString());
         } catch (IOException e) {
             log.error("【上传】失败：{}", e.getLocalizedMessage(),e);
             return null;

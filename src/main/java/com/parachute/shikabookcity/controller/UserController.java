@@ -138,8 +138,8 @@ public class UserController {
     @RequestMapping("upload")
     public Result upload(@RequestParam("imgFile") MultipartFile imgFile) {
 
-        try {String fileUrl = userService.upload(imgFile);
-        return Result.of(true, ResultConstant.UPLOAD_SUCCEED, fileUrl);
+        try {
+            return userService.upload(imgFile);
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             return Result.of(false, ResultConstant.IS_EXIST);

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.parachute.shikabookcity.config.CustomObjectMapper;
 import com.parachute.shikabookcity.constant.ResultConstant;
 import com.parachute.shikabookcity.constant.SysConstant;
@@ -13,19 +12,15 @@ import com.parachute.shikabookcity.dao.UserDao;
 import com.parachute.shikabookcity.entity.User;
 import com.parachute.shikabookcity.service.UserService;
 import com.parachute.shikabookcity.util.ImgtuUtils;
+import com.parachute.shikabookcity.util.NetworkUtil;
 import com.parachute.shikabookcity.util.Result;
 import lombok.SneakyThrows;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -69,15 +64,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         if (user1 != null) {
             return Result.of(false, ResultConstant.USERNAME_IS_REGISTERED);
         }
-        //获取请求
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        // 通过ip获取其所属的地址
-        ResponseEntity<String> result = restTemplate.getForEntity("https://whois.pconline.com.cn/ipJson.jsp?ip=" + request.getRemoteHost() + "&json=true", String.class);
-        String body = result.getBody();
-        Map<String, String> map = objectMapper.readValue(body, new TypeReference<Map<String, String>>() {
-        });
+        Map<String, String> map = NetworkUtil.getIPBody(restTemplate, objectMapper);
 
-        String location = map.get("addr") + map.get("pro") + map.get("city") + map.get("region");
+        String location =  map.get("pro") + map.get("city") + map.get("region");
         int i = new Random().nextInt(100000);
         String nickName = "用户_" + i;
         //注入信息
@@ -93,9 +82,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         //登录时间
         user2.setLoginDate(new Date());
         //登录地址ip
-        user2.setLoginIp(location);
+        user2.setLoginIp(map.get("ip"));
         //登录地址
-        user2.setIpaddr(request.getRemoteAddr());
+        user2.setIpaddr(location);
         //创建时间
         user2.setCreateTime(new Date());
         //修改时间
@@ -115,24 +104,16 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @SneakyThrows
     @Override
     public void login(User user) {
-        //获取请求
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        // 通过ip获取其所属的地址
-        ResponseEntity<String> result = restTemplate.getForEntity("https://whois.pconline.com.cn/ipJson.jsp?ip=" + request.getRemoteHost() + "&json=true", String.class);
 
-        String body = result.getBody();
-        Map<String, String> map = objectMapper.readValue(body, new TypeReference<Map<String, String>>() {
-        });
-
-        String location = map.get("addr") + map.get("pro") + map.get("city") + map.get("region");
-
+        Map<String, String> map = NetworkUtil.getIPBody(restTemplate, objectMapper);
+        String location =  map.get("pro") + map.get("city") + map.get("region");
 
         LambdaUpdateWrapper<User> updateWrapper = Wrappers.lambdaUpdate();
         //登录时间
         updateWrapper.set(User::getLoginDate, new Date())
                 //登录地址
-                .set(User::getIpaddr, request.getRemoteAddr())
-                .set(User::getLoginIp, location).eq(User::getUserName, user.getUserName());
+                .set(User::getIpaddr, location)
+                .set(User::getLoginIp, map.get("ip")).eq(User::getUserName, user.getUserName());
         super.baseMapper.update(null, updateWrapper);
 
     }
@@ -200,17 +181,18 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      * @return {@link String}
      */
     @Override
-    public String upload(MultipartFile imgFile) {
+    public Result upload(MultipartFile imgFile) {
         //随机文件名称防止覆盖
         String fileName = UUID.randomUUID().toString();
-            String fileUrl = null;
+        Result result = null;
             try {
                 //上传文件到路过图床，返回图片Url到前端展示
-                fileUrl = ImgtuUtils.upload(imgFile.getBytes(), fileName, ContentType.IMAGE_JPEG);
+                result = ImgtuUtils.upload(imgFile.getBytes(), fileName, ContentType.IMAGE_JPEG);
             } catch (Exception e) {
                 log.error(e.getMessage(),e);
+                return result;
             }
-        return fileUrl;
+        return result;
     }
 
 }

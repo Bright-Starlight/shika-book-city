@@ -141,7 +141,7 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
         if (book.getType() == null) {
             return Result.of(false, ResultConstant.BOOK_TYPE_NOT_SELECTED);
         }
-        return null;
+        return Result.of(true,"");
     }
 
     /**
@@ -189,26 +189,26 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements BookS
 
         //表单校验
         Result result = validateForm(book);
-        if (result != null) {
-            return result;
-        }
-        //随机生成不重复的商品编码
-        String commodityCode = insertCommodityCode();
-        book.setCommodityCode(commodityCode);
+        if (result.isFlag()){
+            //随机生成不重复的商品编码
+            String commodityCode = insertCommodityCode();
+            book.setCommodityCode(commodityCode);
 
-        //填入基本信息
-        book.setCreateTime(new Date());
-        book.setUpdateName(SysConstant.USER_UPDATE);
-        book.setUpdateTime(new Date());
-        save(book);
-        int i1 = Integer.parseInt(id);
-        //修改用户与书籍的联系
-        addUserBook(i1, book.getId());
-        List<String> types = book.getType();
-        //注入书籍类型联系
-        Integer bookId = book.getId();
-        types.forEach(type -> bookDao.addBookType(bookId, type));
-        return Result.of(true, ResultConstant.UPDATE_SUCCEED);
+            //填入基本信息
+            book.setCreateTime(new Date());
+            book.setUpdateName(SysConstant.USER_UPDATE);
+            book.setUpdateTime(new Date());
+            save(book);
+            int i1 = Integer.parseInt(id);
+            //修改用户与书籍的联系
+            addUserBook(i1, book.getId());
+            List<String> types = book.getType();
+            //注入书籍类型联系
+            Integer bookId = book.getId();
+            types.forEach(type -> bookDao.addBookType(bookId, type));
+            return Result.of(true, ResultConstant.UPDATE_SUCCEED);
+        }
+        return result;
     }
 
     /**

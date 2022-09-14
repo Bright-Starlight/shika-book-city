@@ -331,13 +331,13 @@ const cities = [
 ];
 
 //是否显现
-var dialogVisible = ref();
+const dialogVisible = ref();
 const ruleFormRef = ref(null);
-var addForm = ref({}); //新增表单
-var form = ref({}); //表单
-var tableData = ref([]); //列表数据
-var total = ref(0); //数据总条数
-var pageSize = ref(0); //页面最大展现条数
+const addForm = ref({}); //新增表单
+const form = ref({}); //表单
+const tableData = ref([]); //列表数据
+const total = ref(0); //数据总条数
+const pageSize = ref(0); //页面最大展现条数
 let imageUrl = ref(); //封面图片
 import storage from "@/util/storage";
 
@@ -356,14 +356,24 @@ onMounted(() => {
 });
 //上传完成后执行
 let handleAvatarSuccess = function (response) {
-  imageUrl.value = response.data;
-  form.value.cover = response.data;
-  addForm.value.cover = response.data;
-  ElMessage({
-    showClose: true,
-    message: response.message,
-    type: "success",
-  });
+
+  if (response.flag){
+    imageUrl.value = response.data;
+    form.value.cover = response.data;
+    addForm.value.cover = response.data;
+    console.log(response)
+    ElMessage({
+      showClose: true,
+      message: response.message,
+      type: "success",
+    });
+  }else {
+    ElMessage({
+      showClose: true,
+      message: response.message,
+      type: "error",
+    });
+  }
 };
 //上传前校验
 let beforeAvatarUpload = function (rawFile) {
@@ -424,7 +434,7 @@ const Delete = (data) => {
     type: "warning",
   })
       .then(() => {
-        var id = {
+        const id = {
           bookId: data,
           userId: storage.getSessionString("id"),
         };
@@ -461,7 +471,7 @@ const added = (data) => {
     type: "warning",
   })
       .then(() => {
-        var id = {
+        const id = {
           id: data,
         };
         noAdded(id).then((res) => {

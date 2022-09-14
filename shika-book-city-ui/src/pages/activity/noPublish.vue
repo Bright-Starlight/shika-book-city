@@ -84,7 +84,7 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
             >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="用户头像"/>
               <el-icon v-else class="avatar-uploader-icon"
                 ><i class="el-icon"
                   ><svg
@@ -199,7 +199,7 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
             >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="用户头像"/>
               <el-icon v-else class="avatar-uploader-icon"
                 ><i class="el-icon"
                   ><svg
@@ -235,7 +235,7 @@
   <el-table :data="filterTableData" style="width: 100%">
     <el-table-column label="封面">
       <template #default="scope">
-        <img :src="scope.row.cover" style="height: 50px" />
+        <img :src="scope.row.cover" style="height: 50px" alt="封面"/>
       </template>
     </el-table-column>
 
@@ -292,15 +292,15 @@ let headers = ref({
 
 
 //是否显现
-var dialogVisible = ref();
-var dialogAddVisible = ref();
+const dialogVisible = ref();
+const dialogAddVisible = ref();
 const ruleFormRef = ref(null);
 const AddruleFormRef = ref(null); //表单校验数据
-var addForm = ref({}); //新增表单
-var form = ref({}); //表单
-var tableData = ref([]); //列表数据
-var total = ref(0); //数据总条数
-var pageSize = ref(0); //页面最大展现条数
+const addForm = ref({}); //新增表单
+const form = ref({}); //表单
+const tableData = ref([]); //列表数据
+const total = ref(0); //数据总条数
+const pageSize = ref(0); //页面最大展现条数
 let imageUrl = ref(); //封面图片
 import storage from "@/util/storage";
 
@@ -331,14 +331,24 @@ onMounted(() => {
 });
 //上传完成后执行
 let handleAvatarSuccess = function (response) {
-  imageUrl.value = response.data;
-  form.value.cover = response.data;
-  addForm.value.cover = response.data;
-  ElMessage({
-    showClose: true,
-    message: response.message,
-    type: "success",
-  });
+
+  if (response.flag){
+    imageUrl.value = response.data;
+    form.value.cover = response.data;
+    addForm.value.cover = response.data;
+    console.log(response)
+    ElMessage({
+      showClose: true,
+      message: response.message,
+      type: "success",
+    });
+  }else {
+    ElMessage({
+      showClose: true,
+      message: response.message,
+      type: "error",
+    });
+  }
 };
 //上传前校验
 let beforeAvatarUpload = function (rawFile) {
@@ -405,7 +415,7 @@ const Delete = (data) => {
     type: "warning",
   })
     .then(() => {
-      var id = {
+      const id = {
         activityId: data,
         userId: storage.getSessionString("id"),
       };
@@ -481,7 +491,7 @@ const pub = (id, start,end) => {
     type: "warning",
   })
     .then(() => {
-      var data = {
+      const data = {
         activityId: id,
         startTime:start,
         activityDeadline: end,

@@ -2,7 +2,7 @@
   <el-table :data="filterTableData" style="width: 100%">
     <el-table-column label="封面">
       <template #default="scope">
-        <img :src="scope.row.cover" style="height: 50px" />
+        <img :src="scope.row.cover" style="height: 50px" alt="封面"/>
       </template>
     </el-table-column>
 
@@ -34,13 +34,12 @@
 </template>
 <script  setup>
 import { ElMessage, ElMessageBox } from "element-plus";
-import { computed, ref } from "vue";
+import { computed, ref,onMounted } from "vue";
 import { getAllBook, getIsDie, delActivity } from "@/api/activity";
-import { onMounted } from "vue";
 
-var tableData = ref([]); //列表数据
-var total = ref(0); //数据总条数
-var pageSize = ref(0); //页面最大展现条数
+const tableData = ref([]); //列表数据
+const total = ref(0); //数据总条数
+const pageSize = ref(0); //页面最大展现条数
 
 import storage from "@/util/storage";
 
@@ -99,7 +98,7 @@ const Delete = (data) => {
     type: "warning",
   })
     .then(() => {
-      var id = {
+      const id = {
         activityId: data,
         userId: storage.getSessionString("id"),
       };

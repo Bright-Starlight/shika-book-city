@@ -24,7 +24,7 @@ public class ResultConstant {
     public static final String UNKNOWN_ERROR = "未知错误" ;
     public static final String LOGIN_SUCCEED = "登录成功" ;
     public static final String UPLOAD_SUCCEED = "上传成功" ;
-    public static final String IS_EXIST = "已经存在" ;
+    public static final String IS_EXIST = "图片已经被其他用户使用" ;
     public static final String INSERT_EXIST = "添加成功" ;
     public static final String NO_PICTURES_UPLOADED = "没有上传图片";
     public static final String DESCRIPTION_IS_EMPTY = "简介为空";

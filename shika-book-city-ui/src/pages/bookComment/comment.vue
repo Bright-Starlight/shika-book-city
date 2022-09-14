@@ -3,7 +3,7 @@
   <el-table :data="filterTableData" style="width: 100%">
     <el-table-column label="用户头像">
       <template #default="scope">
-        <img :src="scope.row.profile" style="height: 50px" />
+        <img :src="scope.row.profile" style="height: 50px" alt="用户头像"/>
       </template>
     </el-table-column>
     <el-table-column label="用户昵称" prop="nickName" />
@@ -38,8 +38,8 @@ import { computed, ref ,onMounted } from "vue";
 import { getBookComment } from "@/api/bookComment";
 let router = useRouter()
 
-var detail = ref(router.currentRoute.value.params.name)
-var commodityCode = ref(router.currentRoute.value.params.commodityCode)
+const detail = ref(router.currentRoute.value.params.name)
+const commodityCode = ref(router.currentRoute.value.params.commodityCode)
 //返回页面函数
 const goBack = ()=>{
 
@@ -47,9 +47,9 @@ router.push(("bookComment"))
 }
 
 
-var tableData = ref([]); //列表数据
-var total = ref(0); //数据总条数
-var pageSize = ref(0); //页面最大展现条数
+const tableData = ref([]); //列表数据
+const total = ref(0); //数据总条数
+const pageSize = ref(0); //页面最大展现条数
 
 
 

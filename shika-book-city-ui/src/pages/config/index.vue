@@ -48,7 +48,7 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="用户头像"/>
           <el-icon v-else class="avatar-uploader-icon"
             ><i class="el-icon"
               ><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -169,13 +169,22 @@ export default {
       });
     }, //上传成功后执行
     handleAvatarSuccess(response) {
-      this.imageUrl = response.data;
-      this.form.profile = response.data;
-      ElMessage({
-        showClose: true,
-        message: response.message,
-        type: "success",
-      });
+      if (response.flag){
+        this.imageUrl = response.data;
+        this.form.profile = response.data;
+        ElMessage({
+          showClose: true,
+          message: response.message,
+          type: "success",
+        });
+      }else {
+        ElMessage({
+          showClose: true,
+          message: response.message,
+          type: "error",
+        });
+      }
+
     }, //
     //上传图片之前执行
     beforeAvatarUpload(rawFile) {
