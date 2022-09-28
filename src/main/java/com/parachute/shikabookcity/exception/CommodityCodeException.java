@@ -6,7 +6,7 @@ package com.parachute.shikabookcity.exception;
  * @author machi
  * @date 2022/05/12
  */
-public class CommodityCodeException extends RuntimeException{
+public class CommodityCodeException extends Exception{
 
     public CommodityCodeException(String message) {
         super(message);

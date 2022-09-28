@@ -8,6 +8,7 @@ import com.github.pagehelper.page.PageMethod;
 import com.parachute.shikabookcity.constant.ResultConstant;
 import com.parachute.shikabookcity.entity.Activity;
 import com.parachute.shikabookcity.entity.Book;
+import com.parachute.shikabookcity.exception.CommodityCodeException;
 import com.parachute.shikabookcity.service.ActivityService;
 import com.parachute.shikabookcity.service.BookService;
 import com.parachute.shikabookcity.util.Page;
@@ -229,6 +230,9 @@ public class ActivityController  {
         try {
             //新增活动
             return activityService.insert(data);
+        }catch (CommodityCodeException e){
+            log.error(e.getMessage(),e);
+            return Result.of(false,ResultConstant.COMMODITY_CODE_IS_DUPLICATION);
         }catch (Exception e){
             log.error(e.getMessage(),e);
             return Result.of(false,ResultConstant.SERVER_EXCEPTION);

@@ -2,6 +2,7 @@ package com.parachute.shikabookcity.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.parachute.shikabookcity.entity.Activity;
+import com.parachute.shikabookcity.exception.CommodityCodeException;
 import com.parachute.shikabookcity.util.Result;
 
 import java.util.Date;
@@ -135,7 +136,7 @@ public interface ActivityService extends IService<Activity> {
      * @param data 数据
      * @return {@link Result}
      */
-    Result insert(Map<String,Object> data);
+    Result insert(Map<String,Object> data) throws CommodityCodeException;
 
     /**
      * 验证表单
@@ -166,11 +167,14 @@ public interface ActivityService extends IService<Activity> {
      * @param activityId 活动id
      */
     void delActivity(Integer userId, Integer activityId);
+
     /**
+     * 插入商品编码
      * 插入不重复商品编码
      *
      * @return {@link String}
+     * @throws CommodityCodeException 商品编码异常
      */
-    String insertCommodityCode();
+    String insertCommodityCode() throws CommodityCodeException;
 }
 

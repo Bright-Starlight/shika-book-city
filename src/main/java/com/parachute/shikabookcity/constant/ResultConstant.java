@@ -7,6 +7,7 @@ package com.parachute.shikabookcity.constant;
  * @date 2022/05/04
  */
 public class ResultConstant {
+    public static final String NETWORK_ANOMALY = "网络异常";
     public static final String USERNAME_IS_EMPTY = "用户名为空";
     public static final String PASSWORD_IS_EMPTY = "密码为空";
     public static final String FORCE_STOP = "强制停止成功";

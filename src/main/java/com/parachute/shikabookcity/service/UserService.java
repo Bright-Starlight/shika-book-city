@@ -2,8 +2,11 @@ package com.parachute.shikabookcity.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.parachute.shikabookcity.entity.User;
+import com.parachute.shikabookcity.exception.NetworkAnomalyException;
 import com.parachute.shikabookcity.util.Result;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * (User)表服务接口
@@ -18,7 +21,7 @@ public interface UserService extends IService<User> {
      *
      * @param user 用户
      */
-    void login(User user);
+    void login(User user) throws NetworkAnomalyException, IOException;
 
     /**
      * 注册
@@ -26,7 +29,7 @@ public interface UserService extends IService<User> {
      * @param user 用户
      * @return {@link Result}
      */
-    Result register(User user);
+    Result register(User user) throws NetworkAnomalyException, IOException;
 
 
 

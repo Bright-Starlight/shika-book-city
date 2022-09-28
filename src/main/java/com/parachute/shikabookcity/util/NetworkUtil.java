@@ -3,6 +3,8 @@ package com.parachute.shikabookcity.util;
 import com.alibaba.druid.util.StringUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.parachute.shikabookcity.config.CustomObjectMapper;
+import com.parachute.shikabookcity.constant.ResultConstant;
+import com.parachute.shikabookcity.exception.NetworkAnomalyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -29,8 +31,8 @@ public final class NetworkUtil {
      *
      * @return {@link String}
      * @throws IOException ioexception
-     */ // 方法4
-    private static String getNowIP() throws IOException {
+     */
+    private static String getNowIP() throws IOException, NetworkAnomalyException {
         String ip = null;
         String objWebURL = "https://bajiu.cn/ip/";
         URL url = new URL(objWebURL);
@@ -46,16 +48,21 @@ public final class NetworkUtil {
             log.error(e.getMessage(), e);
         }
         if (StringUtils.isEmpty(ip)) {
-            throw new RuntimeException("获取失败");
+            throw new NetworkAnomalyException(ResultConstant.NETWORK_ANOMALY);
         }
         return ip;
     }
 
-    public static Map<String, String> getIPBody(RestTemplate restTemplate, CustomObjectMapper objectMapper) throws IOException {
+    public static Map<String, String> getIPBody(RestTemplate restTemplate, CustomObjectMapper objectMapper) throws IOException, NetworkAnomalyException {
 
         String nowIP = getNowIP();
-        ResponseEntity<String> result = restTemplate.getForEntity("https://whois.pconline.com.cn/ipJson.jsp?ip=" + nowIP + "&json=true", String.class);
-
+        ResponseEntity<String> result = null;
+        try {
+            result = restTemplate.getForEntity("https://whois.pconline.com.cn/ipJson.jsp?ip=" + nowIP + "&json=true", String.class);
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+            throw new NetworkAnomalyException(ResultConstant.NETWORK_ANOMALY);
+        }
         String body = result.getBody();
         return objectMapper.readValue(body, new TypeReference<Map<String, String>>() {
         });

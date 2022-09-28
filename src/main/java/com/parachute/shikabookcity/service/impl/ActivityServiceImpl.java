@@ -232,7 +232,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityDao, Activity> impl
      */
     @SneakyThrows
     @Override
-    public Result insert(Map<String,Object> data) {
+    public Result insert(Map<String,Object> data)throws CommodityCodeException {
         Object o = data.get("activity");
         Activity activity = JSON.parseObject(JSON.toJSONString(o), new TypeReference<Activity>() {
         });
@@ -356,7 +356,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityDao, Activity> impl
     }
 
     @Override
-    public String insertCommodityCode() {
+    public String insertCommodityCode() throws CommodityCodeException {
         //随机生成商品编码
         String commodityCode = null;
         boolean flag  =false;

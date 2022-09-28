@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.parachute.shikabookcity.constant.Constant;
 import com.parachute.shikabookcity.constant.ResultConstant;
 import com.parachute.shikabookcity.entity.User;
+import com.parachute.shikabookcity.exception.NetworkAnomalyException;
 import com.parachute.shikabookcity.service.UserService;
 import com.parachute.shikabookcity.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -85,7 +86,15 @@ public class UserController {
         map.put("userName", userName);
         map.put("token", uuid);
         redisTemplate.opsForValue().set(Constant.LOGIN_TOKEN + userName, uuid);
-        userService.login(user);
+        try {
+            userService.login(user);
+        }catch (NetworkAnomalyException e){
+            log.error(e.getMessage(),e);
+            return Result.of(false,ResultConstant.NETWORK_ANOMALY);
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            return Result.of(false,ResultConstant.SERVER_EXCEPTION);
+        }
         map.put("nickName", nickName);
         map.put("profile", profile);
         map.put("id", id);
@@ -101,7 +110,15 @@ public class UserController {
     @RequestMapping("register")
     public Result register(@RequestBody User user) {
         if (user != null) {
-            return userService.register(user);
+            try {
+                return userService.register(user);
+            }catch (NetworkAnomalyException e){
+                log.error(e.getMessage(),e);
+                return Result.of(false,ResultConstant.NETWORK_ANOMALY);
+            }catch (Exception e){
+                log.error(e.getMessage(),e);
+                return Result.of(false,ResultConstant.SERVER_EXCEPTION);
+            }
         }
         return Result.of(false, ResultConstant.SERVER_EXCEPTION);
     }

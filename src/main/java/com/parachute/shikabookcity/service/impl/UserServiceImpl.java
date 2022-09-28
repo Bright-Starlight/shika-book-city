@@ -10,6 +10,7 @@ import com.parachute.shikabookcity.constant.ResultConstant;
 import com.parachute.shikabookcity.constant.SysConstant;
 import com.parachute.shikabookcity.dao.UserDao;
 import com.parachute.shikabookcity.entity.User;
+import com.parachute.shikabookcity.exception.NetworkAnomalyException;
 import com.parachute.shikabookcity.service.UserService;
 import com.parachute.shikabookcity.util.ImgtuUtils;
 import com.parachute.shikabookcity.util.NetworkUtil;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -45,9 +48,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      * @param user 用户
      * @return {@link Result}
      */
-    @SneakyThrows
+
     @Override
-    public Result register(User user) {
+    public Result register(User user) throws NetworkAnomalyException, IOException {
         String userName = user.getUserName();
         String password = user.getPassword();
         if (userName.isEmpty()){
@@ -101,9 +104,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      *
      * @param user 用户
      */
-    @SneakyThrows
+
     @Override
-    public void login(User user) {
+    public void login(User user) throws NetworkAnomalyException, IOException {
 
         Map<String, String> map = NetworkUtil.getIPBody(restTemplate, objectMapper);
         String location =  map.get("pro") + map.get("city") + map.get("region");
